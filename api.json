@@ -34,6 +34,16 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Ошибка входа",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -59,6 +69,16 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/SuccessMessage"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Ошибка входа",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorMessage"
                                 }
                             }
                         }
@@ -92,6 +112,16 @@
                         "type": "string",
                         "description": "Сообщение об успешном действии",
                         "example": "Вы успешной вошли"
+                    }
+                }
+            },
+            "ErrorMessage": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "description": "Сообщение об ошибке",
+                        "example": "Ошибка вводе пароля"
                     }
                 }
             }
