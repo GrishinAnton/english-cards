@@ -1,0 +1,100 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "English-card",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "https://api.server.test/api/"
+        }
+    ],
+    "paths": {
+        "/register": {
+            "post": {
+                "description": "Эндпоинт для регистрации",
+                "requestBody": {
+                    "description": "Регистрация пользователя",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Register"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "description": "Эндпоинт для входа пользователя",
+                "requestBody": {
+                    "description": "Вход пользователя",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Register"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Register": {
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "example": "test@mail.ru"
+                    },
+                    "password": {
+                        "type": "number"
+                    }
+                }
+            },
+            "SuccessMessage": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "description": "Сообщение об успешном действии",
+                        "example": "Вы успешной вошли"
+                    }
+                }
+            }
+        }
+    }
+}
