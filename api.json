@@ -74,7 +74,79 @@
                         }
                     },
                     "403": {
-                        "description": "Ошибка входа",
+                        "description": "Ошибка Авторизации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/profile": {
+            "get": {
+                "description": "Получение данных о пользователе",
+                "requestBody": {
+                    "description": "Получение данных о пользователе",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Profile"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Profile"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Ошибка авторзации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Обновление данных о пользователе",
+                "requestBody": {
+                    "description": "Обновление данных пользоватлея",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Profile"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Profile"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Ошибка авторзации",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -102,6 +174,31 @@
                     },
                     "password": {
                         "type": "number"
+                    }
+                }
+            },
+            "Profile": {
+                "type": "object",
+                "properties": {
+                    "avatar": {
+                        "type": "string",
+                        "example": "https://exclaim.ca//images/avatar_4.jpg"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Petia"
+                    },
+                    "sername": {
+                        "type": "string",
+                        "example": "Mishin"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "test@test.ru"
+                    },
+                    "sex": {
+                        "type": "string",
+                        "example": "male"
                     }
                 }
             },
