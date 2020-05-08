@@ -165,6 +165,59 @@
                     }
                 }
             }
+        },
+        "/statistics": {
+            "get": {
+                "description": "Получение статистики по словам",
+                "responses": {
+                    "200": {
+                        "description": "Список карточек с информацией",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WordsStatistic"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/learnwordsblock": {
+            "get": {
+                "description": "Получение возможных блоков слов для изучения",
+                "responses": {
+                    "200": {
+                        "description": "Блок для изучения слов",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "$ref": "#/components/schemas/WordsToLearnBlock"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/wordsdictionary": {
+            "get": {
+                "description": "Словарь слов",
+                "responses": {
+                    "200": {
+                        "description": "Словарь слов",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "$ref": "#/components/schemas/LearningWordsList"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -213,6 +266,10 @@
             "Card": {
                 "type": "object",
                 "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": 1
+                    },
                     "name": {
                         "type": "string",
                         "example": "Брейншторм"
@@ -270,6 +327,39 @@
                     "image": {
                         "type": "string",
                         "example": "https://exclaim.ca//images/avatar_4.jpg"
+                    }
+                }
+            },
+            "LearningWordsList": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": 33
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Hello"
+                    },
+                    "translates": {
+                        "type": "array"
+                    },
+                    "mastPopulate": {
+                        "type": "string",
+                        "example": "Привет"
+                    },
+                    "image": {
+                        "type": "string",
+                        "example": "https://exclaim.ca//images/avatar_4.jpg"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "learning",
+                            "new",
+                            "repeat"
+                        ],
+                        "example": "add"
                     }
                 }
             },
