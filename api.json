@@ -89,16 +89,6 @@
         "/profile": {
             "get": {
                 "description": "Получение данных о пользователе",
-                "requestBody": {
-                    "description": "Получение данных о пользователе",
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Profile"
-                            }
-                        }
-                    }
-                },
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -157,6 +147,24 @@
                     }
                 }
             }
+        },
+        "/cards": {
+            "get": {
+                "description": "Карточки для изучения языка",
+                "responses": {
+                    "200": {
+                        "description": "Список карточек с информацией",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "$ref": "#/components/schemas/Card"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -199,6 +207,27 @@
                     "sex": {
                         "type": "string",
                         "example": "male"
+                    }
+                }
+            },
+            "Card": {
+                "type": "array",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Брейншторм"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Данный вид карточки представляет из себя агрегацию всех карточек"
+                    },
+                    "image": {
+                        "type": "string",
+                        "example": "https://exclaim.ca//images/avatar_4.jpg"
+                    },
+                    "counts": {
+                        "type": "integer",
+                        "example": 456
                     }
                 }
             },
