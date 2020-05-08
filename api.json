@@ -158,7 +158,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "array",
-                                    "$ref": "#/components/schemas/Card"
+                                    "items": {
+                                        "$ref": "#/components/schemas/Card"
+                                    }
                                 }
                             }
                         }
@@ -193,7 +195,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "array",
-                                    "$ref": "#/components/schemas/WordsToLearnBlock"
+                                    "items": {
+                                        "$ref": "#/components/schemas/WordsToLearnBlock"
+                                    }
                                 }
                             }
                         }
@@ -211,7 +215,45 @@
                             "application/json": {
                                 "schema": {
                                     "type": "array",
-                                    "$ref": "#/components/schemas/LearningWordsList"
+                                    "items": {
+                                        "$ref": "#/components/schemas/LearningWordsList"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Удаление слов из словаря",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id слов для удалени",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Удаление слов из словаря",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "required": [
+                                            "id"
+                                        ],
+                                        "properties": {
+                                            "id": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -342,11 +384,22 @@
                         "example": "Hello"
                     },
                     "translates": {
-                        "type": "array"
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "example": "Привет Чувак!"
+                        }
                     },
                     "mastPopulate": {
                         "type": "string",
                         "example": "Привет"
+                    },
+                    "dictionary": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "example": "Семья"
+                        }
                     },
                     "image": {
                         "type": "string",
