@@ -120,6 +120,26 @@ paths:
                                 type: array
                                 items:
                                     $ref: "#/components/schemas/WordsToLearnBlock"
+        post:
+            description: Добавление блока слов в изучаемые слова
+            requestBody:
+                description: Добавление блока слов в изучаемые слова
+                content:
+                    application/json:
+                        schema:
+                            type: integer
+                            properties:
+                                id:
+                                    type: integer
+                                    example: 33
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SuccessMessage"
+
     /words-dictionary:
         get:
             description: Словарь слов
@@ -134,13 +154,14 @@ paths:
                                     $ref: "#/components/schemas/LearningWordsList"
         delete:
             description: Удаление слов из словаря
-            parameters:
-                - name: id
-                  in: path
-                  description: Id слов для удалени
-                  required: true
-                  schema:
-                      type: number
+            requestBody:
+                description: Id слов для удалени
+                content:
+                    application/json:
+                        schema:
+                            type: array
+                            items:
+                                type: number
             responses:
                 "200":
                     description: Удаление слов из словаря
