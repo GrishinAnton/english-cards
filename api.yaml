@@ -14,7 +14,6 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/Register"
-                required: true
             responses:
                 "200":
                     description: OK
@@ -37,7 +36,6 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/Register"
-                required: true
             responses:
                 "200":
                     description: OK
