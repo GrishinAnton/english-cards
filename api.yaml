@@ -1,0 +1,283 @@
+openapi: 3.0.2
+info:
+    title: English-card
+    version: "1.0"
+servers:
+    - url: "https://api.server.test/api/"
+paths:
+    /register:
+        post:
+            description: Эндпоинт для регистрации
+            requestBody:
+                description: Регистрация пользователя
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Register"
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SuccessMessage"
+                "403":
+                    description: Ошибка входа
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ErrorMessage"
+    /login:
+        post:
+            description: Эндпоинт для входа пользователя
+            requestBody:
+                description: Вход пользователя
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Register"
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SuccessMessage"
+                "403":
+                    description: Ошибка Авторизации
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ErrorMessage"
+    /profile:
+        get:
+            description: Получение данных о пользователе
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Profile"
+                "403":
+                    description: Ошибка авторзации
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ErrorMessage"
+        post:
+            description: Обновление данных о пользователе
+            requestBody:
+                description: Обновление данных пользоватлея
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Profile"
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Profile"
+                "403":
+                    description: Ошибка авторзации
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ErrorMessage"
+    /cards:
+        get:
+            description: Карточки для изучения языка
+            responses:
+                "200":
+                    description: Список карточек с информацией
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Card"
+    /statistics:
+        get:
+            description: Получение статистики по словам
+            responses:
+                "200":
+                    description: Список карточек с информацией
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/WordsStatistic"
+    /learnwordsblock:
+        get:
+            description: Получение возможных блоков слов для изучения
+            responses:
+                "200":
+                    description: Блок для изучения слов
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/WordsToLearnBlock"
+    /wordsdictionary:
+        get:
+            description: Словарь слов
+            responses:
+                "200":
+                    description: Словарь слов
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/LearningWordsList"
+        delete:
+            description: Удаление слов из словаря
+            parameters:
+                - name: id
+                  in: path
+                  description: Id слов для удалени
+                  required: true
+                  schema:
+                      type: number
+            responses:
+                "200":
+                    description: Удаление слов из словаря
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    required:
+                                        - id
+                                    properties:
+                                        id:
+                                            type: number
+components:
+    schemas:
+        Register:
+            required:
+                - email
+                - password
+            type: object
+            properties:
+                email:
+                    type: string
+                    example: test@mail.ru
+                password:
+                    type: number
+        Profile:
+            type: object
+            properties:
+                avatar:
+                    type: string
+                    example: "https://exclaim.ca//images/avatar_4.jpg"
+                name:
+                    type: string
+                    example: Petia
+                sername:
+                    type: string
+                    example: Mishin
+                email:
+                    type: string
+                    example: test@test.ru
+                sex:
+                    type: string
+                    example: male
+        Card:
+            type: object
+            properties:
+                id:
+                    type: number
+                    example: 1
+                name:
+                    type: string
+                    example: Брейншторм
+                description:
+                    type: string
+                    example: Данный вид карточки представляет из себя агрегацию всех карточек
+                image:
+                    type: string
+                    example: "https://exclaim.ca//images/avatar_4.jpg"
+                counts:
+                    type: integer
+                    example: 456
+        WordsStatistic:
+            type: object
+            properties:
+                howLearn:
+                    type: number
+                    example: 43
+                learning:
+                    type: number
+                    example: 45
+                needRepeat:
+                    type: number
+                    example: 33
+                newWords:
+                    type: number
+                    example: 32
+        WordsToLearnBlock:
+            type: object
+            properties:
+                id:
+                    type: number
+                    example: 1
+                name:
+                    type: string
+                    example: Семья
+                counts:
+                    type: number
+                    example: 32
+                image:
+                    type: string
+                    example: "https://exclaim.ca//images/avatar_4.jpg"
+        LearningWordsList:
+            type: object
+            properties:
+                id:
+                    type: number
+                    example: 33
+                name:
+                    type: string
+                    example: Hello
+                translates:
+                    type: array
+                    items:
+                        type: string
+                        example: Привет Чувак!
+                mastPopulate:
+                    type: string
+                    example: Привет
+                dictionary:
+                    type: array
+                    items:
+                        type: string
+                        example: Семья
+                image:
+                    type: string
+                    example: "https://exclaim.ca//images/avatar_4.jpg"
+                status:
+                    type: string
+                    enum:
+                        - learning
+                        - new
+                        - repeat
+                    example: add
+        SuccessMessage:
+            type: object
+            properties:
+                message:
+                    type: string
+                    description: Сообщение об успешном действии
+                    example: Вы успешной вошли
+        ErrorMessage:
+            type: object
+            properties:
+                message:
+                    type: string
+                    description: Сообщение об ошибке
+                    example: Ошибка вводе пароля
