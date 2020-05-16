@@ -8,3 +8,12 @@
 **Расширения для VSCODE** 
 - OpenAPI (Swagger) Editor
 - Swagger Viewer
+
+**Архитектура**
+Архитектура нарисована в файле Arc.drawio
+Front - React
+REST - Express
+RESTDocumentation - Swagger
+Back - Node
+DBConnect - Mongoose
+DB - MongoDB
