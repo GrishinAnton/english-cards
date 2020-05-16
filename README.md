@@ -10,10 +10,16 @@
 - Swagger Viewer
 
 **Архитектура**
-Архитектура нарисована в файле Arc.drawio
-Front - React
-REST - Express
-RESTDocumentation - Swagger
-Back - Node
-DBConnect - Mongoose
-DB - MongoDB
+- Архитектура нарисована в файле Arc.drawio
+- Front - React
+- REST - Express
+- RESTDocumentation - Swagger
+- Back - Node
+- DBConnect - Mongoose
+- DB - MongoDB
+
+**Папки**
+- client - фронт
+- server - бек
+- api.yaml - swagger
+- docker-compose - docker
