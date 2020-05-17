@@ -1,6 +1,7 @@
 import { createSlice, createAction, createSelector } from "@reduxjs/toolkit";
-import { all, put, takeEvery, delay } from "redux-saga/effects";
+import { all, put, call, takeEvery } from "redux-saga/effects";
 import { fetchWrapper } from "../../utils/fetch";
+import history from "../../utils/browserHistory";
 
 const prefix = "singIn";
 
@@ -33,7 +34,12 @@ export const updateSingInAction = createAction<object>(
 function* updateSingInSaga(action: any) {
   const data = action.payload;
 
-  let response = fetchWrapper("/singup", "POST", data);
+  let response = yield call(fetchWrapper, "/singup", "POST", data);
+  console.log(response, "r");
+
+  if (response) {
+    history.push("/dashboard");
+  }
 
   //   yield put(updateCurrencyFavorite(action.payload));
 }
