@@ -6,9 +6,13 @@ import { fetchWrapper } from '../../utils/fetch'
 const SingUp = () => {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
+    const [passwordDouble, setPasswordDouble] = useState<string>('')
 
     const submit = (e: any) => {
         e.preventDefault()
+
+        if (password !== passwordDouble || !passwordDouble || !password) return false
+
         const data = {
             email: email,
             password: password
@@ -32,9 +36,9 @@ const SingUp = () => {
                 </Form.Group>
                 < Form.Group controlId="formBasicDoublePasswordSingUp" >
                     <Form.Label>Подтвердите пароль:</Form.Label>
-                    <Form.Control onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" />
+                    <Form.Control onChange={(e) => setPasswordDouble(e.target.value)} type="password" placeholder="Password" />
                 </Form.Group>
-                <Button variant="primary" type="submit" > Зарегестрироваться </Button>
+                <Button disabled={!email || !passwordDouble || !password} variant="primary" type="submit" > Зарегестрироваться </Button>
             </Form>
         </>
     )
