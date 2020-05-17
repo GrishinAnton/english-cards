@@ -1,47 +1,34 @@
 import React, { useState } from 'react';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Row, Col, Tabs, Tab, Container } from 'react-bootstrap';
+
+import SingIn from './components/SingIn'
+import SingUp from './components/SingUp'
+
 
 const App = () => {
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-
-
-  const submit = (e: any) => {
-    e.preventDefault()
-    console.log(email);
-    console.log(password);
-    const data = {
-      email: email,
-      password: password
-    }
-    fetch('/singup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data)
-    })
-  }
+  const [tabs, setTabs] = useState<string>('singin')
 
   return (
-    <Row>
-      <Col md={4}>
-        <Form onSubmit={submit}>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Enter email" />
-            <Form.Text className="text-muted">We'll never share your email with anyone else. </Form.Text>
-          </Form.Group>
+    <Container>
+      <Row>
+        <Col md={4}>
+          <Tabs
+            id="controlled-tab-example"
+            activeKey={tabs}
+            onSelect={(k: string) => setTabs(k)}
+          >
+            <Tab eventKey="singin" title="Войти">
+              <SingIn></SingIn>
+            </Tab>
+            <Tab eventKey="singup" title="Зарегестрироваться">
+              <SingUp></SingUp>
+            </Tab>
 
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" />
-          </Form.Group>
-          <Button variant="primary" type="submit">Submit </Button>
-        </Form>
-      </Col>
-    </Row>
+          </Tabs>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

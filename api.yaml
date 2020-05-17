@@ -188,7 +188,7 @@ components:
                     format: email
                     example: test@mail.ru
                 password:
-                    type: integer
+                    type: string
                     format: password
         Profile:
             type: object
