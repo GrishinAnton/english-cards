@@ -7,7 +7,7 @@ const SingInSchema = new.mongoose.Schema({
         required: true
     },
     password: {
-        type: Number,
+        type: String,
         trim: true,
         required: true
     }
@@ -20,7 +20,7 @@ const SingUpSchema = new.mongoose.Schema({
         required: true
     },
     password: {
-        type: Number,
+        type: String,
         trim: true,
         required: true
     }
