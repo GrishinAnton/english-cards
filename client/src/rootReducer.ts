@@ -1,8 +1,8 @@
-import { combineReducers } from "@reduxjs/toolkit";
-import { singInReducer } from "./components/SingIn/ducks";
+import { combineReducers } from '@reduxjs/toolkit'
+import { singInReducer } from './components/SignIn/ducks'
 
 const rootReducers = combineReducers({
-  singInReducer,
-});
+	singInReducer,
+})
 
-export default rootReducers;
+export default rootReducers
