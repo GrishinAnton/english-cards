@@ -1,24 +1,24 @@
-import React from 'react';
-import './App.css';
+//@ts-ignore
+import React from 'react'
+import { Router, Switch, Route } from 'react-router'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Login from './components/Login'
+import Dashboard from './components/Dashboard'
+import history from './utils/browserHistory'
+
+const App = () => {
+	return (
+		<Router history={history}>
+			<Switch>
+				<Route path="/" exact>
+					<Login />
+				</Route>
+				<Route path="/dashboard">
+					<Dashboard />
+				</Route>
+			</Switch>
+		</Router>
+	)
 }
 
-export default App;
+export default App
