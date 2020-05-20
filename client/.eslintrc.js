@@ -1,3 +1,5 @@
+const typescriptEslintRecommended = require('@typescript-eslint/eslint-plugin').configs.recommended;
+
 module.exports = {
 	env: {
 		browser: true,
@@ -18,7 +20,9 @@ module.exports = {
 		},
 		ecmaVersion: 11,
 		sourceType: 'module',
+		project: './tsconfig.json',
 	},
+	files: ['**/*.ts', '**/*.tsx'],
 	plugins: ['@typescript-eslint', 'prettier'],
 	settings: {
 		'import/parsers': {
@@ -28,7 +32,7 @@ module.exports = {
 			typescript: {},
 		},
 	},
-	rules: {
+	rules: Object.assign(typescriptEslintRecommended.rules, {
 		quotes: [
 			'error',
 			'single',
@@ -39,6 +43,6 @@ module.exports = {
 		semi: ['error', 'never'],
 		indent: ['error', 'tab'],
 		'no-unused-vars': 'off',
-		'@typescript-eslint/no-unused-vars': ['error'],
-	},
+		'@typescript-eslint/no-unused-vars': 'off',
+	}),
 }
