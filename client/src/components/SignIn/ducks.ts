@@ -1,7 +1,7 @@
 import { createSlice, createAction, createSelector } from '@reduxjs/toolkit'
 import { all, put, call, takeEvery } from 'redux-saga/effects'
 
-import { fetchWrapper } from '../../utils/fetch'
+import { fetchWrapper } from '../../utils'
 import history from '../../utils/browserHistory'
 
 const prefix = 'singIn'

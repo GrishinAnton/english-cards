@@ -5,6 +5,39 @@ info:
 servers:
   - url: "https://api.server.test/api/"
 paths:
+  /check-email:
+    post:
+      description: Проверка занята ли почта
+      requestBody:
+        description: Проверка занята ли почта или свободна
+        content:
+          application/json:
+            schema:
+              type: string
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: test@mail.ru
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessMessage"
+        "422":
+          description: Данный email занят
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Сообщение об ошибке
+                    example: Ошибка вводе пароля
+
   /register:
     post:
       description: Эндпоинт для регистрации
@@ -188,8 +221,10 @@ components:
           format: email
           example: test@mail.ru
         password:
-          type: integer
+          type: string
           format: password
+          example: fsdf(-sdf
+          minLength: 6
     Profile:
       type: object
       properties:
