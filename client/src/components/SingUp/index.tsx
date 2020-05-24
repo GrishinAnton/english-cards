@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Toast } from 'react-bootstrap'
 
 import { fetchWrapper, CheckValidity, validateEmail } from '../../utils'
 import { ValidatySchemaGroup } from '../../types/types'
@@ -8,6 +8,9 @@ const SingUp = ({changeTab, toast}: any) => {
 	const [email, setEmail] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
   const [passwordDouble, setPasswordDouble] = useState<string>("");  
+  const [buttonLoading, setButtonLoading] = useState<boolean>(false)
+  const [show, setShow] = useState<boolean>(false)
+  const [toastErrorMessage, setToastErrorMessage] = useState<string>('')
 
   const validitySchema: ValidatySchemaGroup = {
     emailValidityCheck: [
@@ -44,6 +47,9 @@ const SingUp = ({changeTab, toast}: any) => {
 
 	const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setButtonLoading(true);
+    setToastErrorMessage('')
+
     let form = e.currentTarget
     let validForm = new CheckValidity(form, validitySchema)
 
@@ -52,14 +58,25 @@ const SingUp = ({changeTab, toast}: any) => {
         email: email,
         password: password,
       };
-      let response = await fetchWrapper("/register", "POST", data);
-      if(response.status === 200){
-        changeTab("signin");
-        validForm.resetAllValidation();
-        resetFormValue()
-        toast(true)
+      try {
+        let response = await fetchWrapper("/register", "POST", data);
+        if (response.status === 200) {
+          changeTab("signin");
+          validForm.resetAllValidation();
+          resetFormValue();
+          toast(true);
+        }
+        if(response.status === 422){
+           setShow(true);
+           response.error && setToastErrorMessage(response.error.message)
+        }
+      } catch (error) {
+        console.log(error);
+        setShow(true)
+        error && setToastErrorMessage(error.message);
       }
     }
+    setButtonLoading(false)
   };
 
   const resetFormValue = () => {
@@ -103,10 +120,19 @@ const SingUp = ({changeTab, toast}: any) => {
             data-validity="passwordDoubleValidityCheck"
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" disabled={buttonLoading}>
           Зарегестрироваться
         </Button>
       </Form>
+      <Toast
+        className="toast"
+        onClose={() => setShow(false)}
+        show={show}
+        delay={3000}
+        autohide
+      >
+        <Toast.Body>{toastErrorMessage}</Toast.Body>
+      </Toast>
     </>
   );
 }
