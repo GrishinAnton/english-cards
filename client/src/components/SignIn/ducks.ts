@@ -35,7 +35,7 @@ export const updateSingInAction = createAction<object>(
 function* updateSingInSaga(action: any) {
 	const data = action.payload
 
-	let response = yield call(fetchWrapper, '/singup', 'POST', data)
+	let response = yield call(fetchWrapper, "/login", "POST", data);
 	console.log(response, 'r')
 
 	if (response) {

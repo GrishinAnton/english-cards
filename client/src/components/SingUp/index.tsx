@@ -61,7 +61,7 @@ const SingUp = () => {
 	return (
     <>
       <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="formBasicEmailSingUp">
+        <Form.Group>
           <Form.Label>Введите адрес электронной почты:</Form.Label>
           <Form.Control
             onChange={(e) => setEmail(e.target.value)}
@@ -71,7 +71,7 @@ const SingUp = () => {
           />
         </Form.Group>
 
-        <Form.Group controlId="formBasicPasswordSingUp">
+        <Form.Group>
           <Form.Label>Введите пароль:</Form.Label>
           <Form.Control
             onChange={(e) => setPassword(e.target.value)}
@@ -80,10 +80,8 @@ const SingUp = () => {
             data-validity="passwordValidityCheck"
             data-bind="passwordDoubleValidityCheck"
           />
-          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-          <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
         </Form.Group>
-        <Form.Group controlId="formBasicDoublePasswordSingUp">
+        <Form.Group>
           <Form.Label>Подтвердите пароль:</Form.Label>
           <Form.Control
             onChange={(e) => setPasswordDouble(e.target.value)}
@@ -91,12 +89,8 @@ const SingUp = () => {
             placeholder="Повторите пароль"
             data-validity="passwordDoubleValidityCheck"
           />
-          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-          <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
         </Form.Group>
-        <Button variant="primary" type="submit">
-          Зарегестрироваться
-        </Button>
+        <Button variant="primary" type="submit">Зарегестрироваться</Button>
       </Form>
     </>
   );

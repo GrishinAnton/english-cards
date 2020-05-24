@@ -30,7 +30,7 @@ const SingIn = () => {
 		]
 	};
 
-	const submit = (e: any) => {
+	const handleSubmit = (e: any) => {
 		e.preventDefault();
 
 		let form = e.currentTarget;
@@ -44,13 +44,12 @@ const SingIn = () => {
 
 		dispatch(updateSingInAction(data));
 		}
-		
-	}
+	};
 
 	return (
     <>
-      <Form onSubmit={submit}>
-        <Form.Group controlId="formBasicEmailSingIn">
+      <Form onSubmit={handleSubmit}>
+        <Form.Group>
           <Form.Label>Введите адрес электронной почты:</Form.Label>
           <Form.Control
             onChange={(e) => setEmail(e.target.value)}
@@ -60,7 +59,7 @@ const SingIn = () => {
           />
         </Form.Group>
 
-        <Form.Group controlId="formBasicPasswordSingIn">
+        <Form.Group>
           <Form.Label>Введите пароль: </Form.Label>
           <Form.Control
             onChange={(e) => setPassword(e.target.value)}
@@ -69,9 +68,7 @@ const SingIn = () => {
             data-validity="passwordValidityCheck"
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
-          Войти
-        </Button>
+        <Button variant="primary" type="submit">Войти</Button>
       </Form>
     </>
   );

@@ -9,5 +9,9 @@ app.post("/register", (req, res) => {
   console.log(req.body);
   res.json(req.body);
 });
+app.post("/login", (req, res) => {
+  console.log(req.body);
+  res.json(req.body);
+});
 
 app.listen(port, () => console.log(`Start:${port}`));
