@@ -55,17 +55,14 @@ const SingUp = () => {
     let form = e.currentTarget
     let validForm = new CheckValidity(form, validitySchema)
 
-    console.log(validForm.valid())
-  
-		if (password !== passwordDouble || !passwordDouble || !password)
-		return false;
-
-		// const data = {
-		// email: email,
-		// password: password,
-		// };
-		// let response = fetchWrapper("/register", "POST", data);
-		// console.log(response);
+    if (validForm.valid()){
+      const data = {
+        email: email,
+        password: password,
+      };
+      let response = fetchWrapper("/register", "POST", data);
+      console.log(response);
+    }
   };
 
 	return (
