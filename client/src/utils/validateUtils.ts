@@ -20,7 +20,7 @@ export class CheckValidity {
     successMessage: string
     validityResult: boolean[]
     bindHash: any
-    
+
     constructor(form: any, validitySchema: any) {
         this.form = form
         this.validitySchema = validitySchema
@@ -83,16 +83,17 @@ export class CheckValidity {
     valid():boolean {
         if(this.form.elements.length){
             for (let i = 0; i < this.form.elements.length; i++) {
-                if (this.form.elements[i].tagName === "INPUT" && this.form.elements[i].dataset.validity) {
-                    let validityType = this.form.elements[i].dataset.validity
+                const currentElement = this.form.elements[i];
+                if (currentElement.tagName === "INPUT" && currentElement.dataset.validity) {
+                    const validityType = this.form.elements[i].dataset.validity
                     
                     //если есть bind то сохраняем его в hash, а дальше уже проверяем, есть ли далее такой жеш у кого-то
-                    if (this.form.elements[i].dataset.bind) this.bindHash[this.form.elements[i].dataset.bind] = this.form.elements[i].value
+                    if (currentElement.dataset.bind) this.bindHash[currentElement.dataset.bind] = currentElement.value
 
-                    this.inputNode = this.form.elements[i]
+                    this.inputNode = currentElement
                     this.validityChecks = this.validitySchema[validityType]
 
-                    const isValid:boolean = this.checkValidity()
+                    const isValid = this.checkValidity()
                     this.validityResult.push(isValid)
                 }
             }
