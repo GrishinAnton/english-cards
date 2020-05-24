@@ -20,7 +20,7 @@ export class CheckValidity {
     successMessage: string
     validityResult: boolean[]
     bindHash: any
-
+    
     constructor(form: any, validitySchema: any) {
         this.form = form
         this.validitySchema = validitySchema

@@ -1,20 +1,13 @@
 import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 
-import { fetchWrapper, validateEmail, CheckValidity,  } from '../../utils'
-import { ValidatySchema } from '../../utils/validateUtils'
-import { dirname } from 'path'
-
-type ValidatySchemaGroup = {
-  emailValidityCheck: ValidatySchema[]
-  passwordValidityCheck: ValidatySchema[]
-  passwordDoubleValidityCheck: ValidatySchema[]
-}
+import { fetchWrapper, CheckValidity, validateEmail } from '../../utils'
+import { ValidatySchemaGroup } from '../../types/types'
 
 const SingUp = () => {
 	const [email, setEmail] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
-  const [passwordDouble, setPasswordDouble] = useState<string>('')
+  const [, setPasswordDouble] = useState<string>('')
 
 
   const validitySchema: ValidatySchemaGroup = {
@@ -50,7 +43,7 @@ const SingUp = () => {
     ]
   }
 
-	const handleSubmit = (e: any) => {
+	const handleSubmit = async (e: any) => {
     e.preventDefault();
     let form = e.currentTarget
     let validForm = new CheckValidity(form, validitySchema)
@@ -60,7 +53,7 @@ const SingUp = () => {
         email: email,
         password: password,
       };
-      let response = fetchWrapper("/register", "POST", data);
+      let response = await fetchWrapper("/register", "POST", data);
       console.log(response);
     }
   };
