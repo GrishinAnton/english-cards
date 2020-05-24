@@ -10,7 +10,6 @@ mongoose.connect(
   { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
-
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => console.log("connected"));
@@ -22,25 +21,23 @@ app.use(express.urlencoded({ extended: true }));
 
 app.post("/register", (req, res) => {
   console.log(req.body, 'body');
-  const rr = new Auth(req.body);
-  rr
+  const request = new Auth(req.body);
+  request
     .save()
     .then((result) => {
-      console.log(result);
-      res.status(201).json({
-        message: "Created product successfully",
-        createdProduct: { },
+      console.log(result, "result");
+      res.status(200).json({
+        status: 200,
+        message: "Вы успешно зарегестрированы",
       });
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).json({
+      res.status(422).json({
+        status: 422,
         error: err,
       });
     });
-
-  
-  // res.status(200).json(req.body);
 });
 
 app.post("/login", (req, res) => {
