@@ -88,7 +88,7 @@ const SingUp = () => {
             type="password"
             placeholder="Пароль"
             data-validity="passwordValidityCheck"
-            data-bind="formBasicDoublePasswordSingUp"
+            data-bind="passwordDoubleValidityCheck"
           />
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           <Form.Control.Feedback type="invalid"></Form.Control.Feedback>

@@ -19,7 +19,7 @@ export class CheckValidity {
     errorMessageClass: string
     successMessage: string
     validityResult: boolean[]
-    bind: any
+    bindHash: any
 
     constructor(form: any, validitySchema: any) {
         this.form = form
@@ -32,7 +32,7 @@ export class CheckValidity {
         this.successMessageClass = 'valid-feedback'
         this.successMessage = 'Выглядит супер!'
         this.validityResult = []
-        this.bind = null
+        this.bindHash = {}
     }
 
     //Создаем любой элемент с классом и текстом
@@ -64,7 +64,7 @@ export class CheckValidity {
 
         for (let i = 0; i < this.validityChecks.length; i++) {
             //Проверяем на невалидность, если есть, ставим флаг
-            if (!this.validityChecks[i].isValid(this.inputNode.value, this.bind)) {
+            if (!this.validityChecks[i].isValid(this.inputNode.value, this.bindHash[this.inputNode.dataset.validity])) {
                 this.inputNode.classList.add(this.invalidInputClass)
                 this.inputNode.parentElement.append(this.createElement(this.errorMessageClass, this.validityChecks[i].invalidityMessage))
                 isValid = false
@@ -85,7 +85,9 @@ export class CheckValidity {
             for (let i = 0; i < this.form.elements.length; i++) {
                 if (this.form.elements[i].tagName === "INPUT" && this.form.elements[i].dataset.validity) {
                     let validityType = this.form.elements[i].dataset.validity
-                    if (this.form.elements[i].dataset.bind) this.bind = this.form.elements[i].value
+                    
+                    //если есть bind то сохраняем его в hash, а дальше уже проверяем, есть ли далее такой жеш у кого-то
+                    if (this.form.elements[i].dataset.bind) this.bindHash[this.form.elements[i].dataset.bind] = this.form.elements[i].value
 
                     this.inputNode = this.form.elements[i]
                     this.validityChecks = this.validitySchema[validityType]
