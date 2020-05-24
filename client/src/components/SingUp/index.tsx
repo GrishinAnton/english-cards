@@ -4,11 +4,10 @@ import { Form, Button } from 'react-bootstrap'
 import { fetchWrapper, CheckValidity, validateEmail } from '../../utils'
 import { ValidatySchemaGroup } from '../../types/types'
 
-const SingUp = () => {
+const SingUp = ({changeTab, toast}: any) => {
 	const [email, setEmail] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
-  const [, setPasswordDouble] = useState<string>('')
-
+  const [passwordDouble, setPasswordDouble] = useState<string>("");  
 
   const validitySchema: ValidatySchemaGroup = {
     emailValidityCheck: [
@@ -54,9 +53,20 @@ const SingUp = () => {
         password: password,
       };
       let response = await fetchWrapper("/register", "POST", data);
-      console.log(response);
+      if(response.status === 200){
+        changeTab("signin");
+        validForm.resetAllValidation();
+        resetFormValue()
+        toast(true)
+      }
     }
   };
+
+  const resetFormValue = () => {
+    setEmail('')
+    setPassword('')
+    setPasswordDouble('')
+  }
 
 	return (
     <>
@@ -68,6 +78,7 @@ const SingUp = () => {
             type="email"
             placeholder="Введите email"
             data-validity="emailValidityCheck"
+            value={email}
           />
         </Form.Group>
 
@@ -76,6 +87,7 @@ const SingUp = () => {
           <Form.Control
             onChange={(e) => setPassword(e.target.value)}
             type="password"
+            value={password}
             placeholder="Пароль"
             data-validity="passwordValidityCheck"
             data-bind="passwordDoubleValidityCheck"
@@ -86,11 +98,14 @@ const SingUp = () => {
           <Form.Control
             onChange={(e) => setPasswordDouble(e.target.value)}
             type="password"
+            value={passwordDouble}
             placeholder="Повторите пароль"
             data-validity="passwordDoubleValidityCheck"
           />
         </Form.Group>
-        <Button variant="primary" type="submit">Зарегестрироваться</Button>
+        <Button variant="primary" type="submit">
+          Зарегестрироваться
+        </Button>
       </Form>
     </>
   );
