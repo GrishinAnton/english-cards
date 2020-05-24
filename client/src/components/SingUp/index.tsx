@@ -1,16 +1,14 @@
 import React, { useState } from 'react'
-import { Form, Button, Toast } from 'react-bootstrap'
+import { Form, Button } from 'react-bootstrap'
 
-import { fetchWrapper, CheckValidity, validateEmail } from '../../utils'
+import { fetchWrapper, CheckValidity, validateEmail, Notification } from '../../utils'
 import { ValidatySchemaGroup } from '../../types/types'
 
-const SingUp = ({changeTab, toast}: any) => {
+const SingUp = ({changeTab}: any) => {
 	const [email, setEmail] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
   const [passwordDouble, setPasswordDouble] = useState<string>("");  
   const [buttonLoading, setButtonLoading] = useState<boolean>(false)
-  const [show, setShow] = useState<boolean>(false)
-  const [toastErrorMessage, setToastErrorMessage] = useState<string>('')
 
   const validitySchema: ValidatySchemaGroup = {
     emailValidityCheck: [
@@ -48,7 +46,6 @@ const SingUp = ({changeTab, toast}: any) => {
 	const handleSubmit = async (e: any) => {
     e.preventDefault();
     setButtonLoading(true);
-    setToastErrorMessage('')
 
     let form = e.currentTarget
     let validForm = new CheckValidity(form, validitySchema)
@@ -60,20 +57,20 @@ const SingUp = ({changeTab, toast}: any) => {
       };
       try {
         let response = await fetchWrapper("/register", "POST", data);
+        
         if (response.status === 200) {
           changeTab("signin");
           validForm.resetAllValidation();
           resetFormValue();
-          toast(true);
+
+          Notification('Вы успешно зарегестрировались')
         }
         if(response.status === 422){
-           setShow(true);
-           response.error && setToastErrorMessage(response.error.message)
+           response.error && Notification(response.error.message);
         }
       } catch (error) {
         console.log(error);
-        setShow(true)
-        error && setToastErrorMessage(error.message);
+        error && Notification(error.message);
       }
     }
     setButtonLoading(false)
@@ -124,15 +121,6 @@ const SingUp = ({changeTab, toast}: any) => {
           Зарегестрироваться
         </Button>
       </Form>
-      <Toast
-        className="toast"
-        onClose={() => setShow(false)}
-        show={show}
-        delay={3000}
-        autohide
-      >
-        <Toast.Body>{toastErrorMessage}</Toast.Body>
-      </Toast>
     </>
   );
 }
