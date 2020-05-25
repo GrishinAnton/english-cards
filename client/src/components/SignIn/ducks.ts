@@ -38,9 +38,9 @@ function* updateSingInSaga(action: any) {
 	let response = yield call(fetchWrapper, "/login", "POST", data);
 	console.log(response, 'r')
 
-	if (response) {
-		history.push('/dashboard')
-	}
+	// if (response) {
+	// 	history.push('/dashboard')
+	// }
 
 	//   yield put(updateCurrencyFavorite(action.payload));
 }

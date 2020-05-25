@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const port = 8080;
 var mongoose = require("mongoose");
+const bcrypt = require("bcrypt")
 require("dotenv").config();
 
 
@@ -40,9 +41,30 @@ app.post("/register", (req, res) => {
     });
 });
 
-app.post("/login", (req, res) => {
+app.post("/login", async (req, res) => {
   console.log(req.body);
-  res.json(req.body);
+  const user = await Auth.findOne({ email: req.body.email })
+  console.log(user);
+  if (!user) {
+      res.status(422).json({
+        status: 422,
+        error: "Email не найден",
+      });
+    }
+  const isValidPassword = await bcrypt.compare(req.body.password, user.password);
+  if (!isValidPassword) {
+    res.status(422).json({
+      status: 422,
+      error: "Пароль указан неверно",
+    });
+  }
+  
+  res.status(200).json({
+    status: 200,
+    user,
+  });
+  
+  
 });
 
 app.listen(port, () => console.log(`Start:${port}`));

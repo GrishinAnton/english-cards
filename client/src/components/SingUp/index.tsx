@@ -57,7 +57,7 @@ const SingUp = ({changeTab}: any) => {
       };
       try {
         let response = await fetchWrapper("/register", "POST", data);
-        
+
         if (response.status === 200) {
           changeTab("signin");
           validForm.resetAllValidation();
@@ -66,7 +66,8 @@ const SingUp = ({changeTab}: any) => {
           Notification('Вы успешно зарегестрировались')
         }
         if(response.status === 422){
-           response.error && Notification(response.error.message);
+           response.error &&
+             Notification(response.error.message || response.error.errmsg);
         }
       } catch (error) {
         console.log(error);

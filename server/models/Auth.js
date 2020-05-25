@@ -1,5 +1,6 @@
   var mongoose = require("mongoose");
   var Schema = mongoose.Schema;
+  const bcrypt = require("bcrypt")
 
 const AuthSchema = new Schema({
   email: {
@@ -19,5 +20,21 @@ const AuthSchema = new Schema({
     minlength: [6, "Поле Password должно содержать минимум 6 символов"],
   },
 });
+
+AuthSchema.pre("save", function (next){
+  
+  if(!this.isModified("password")) return next()
+
+  bcrypt.genSalt(8, (err, salt) => {
+    if(err) return next(err)
+
+    bcrypt.hash(this.password, salt, (err, hash) => {
+      if(err) return next(err)
+      
+      this.password = hash
+      next()
+    })
+  })
+})
 
 module.exports = mongoose.model("Auth", AuthSchema);

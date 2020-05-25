@@ -20,6 +20,9 @@ client/npm-debug.log*
 client/yarn-debug.log*
 client/yarn-error.log*
 client/package-lock.json
-client/client/yarn.lock
+client/yarn.lock
+server/package-lock.json
+server/yarn.lock
 
 server/node_modules
+server/.env
