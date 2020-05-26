@@ -1,6 +1,7 @@
   var mongoose = require("mongoose");
   var Schema = mongoose.Schema;
   const bcrypt = require("bcrypt")
+  const SALT_WORK_FACTOR = 8;
 
 const AuthSchema = new Schema({
   email: {
@@ -25,16 +26,16 @@ AuthSchema.pre("save", function (next){
   
   if(!this.isModified("password")) return next()
 
-  bcrypt.genSalt(8, (err, salt) => {
-    if(err) return next(err)
+  bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
+    if (err) return next(err);
 
     bcrypt.hash(this.password, salt, (err, hash) => {
-      if(err) return next(err)
-      
-      this.password = hash
-      next()
-    })
-  })
+      if (err) return next(err);
+
+      this.password = hash;
+      next();
+    });
+  });
 })
 
 module.exports = mongoose.model("Auth", AuthSchema);
