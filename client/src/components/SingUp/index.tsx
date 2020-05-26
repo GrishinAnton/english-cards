@@ -14,7 +14,7 @@ const SingUp = ({changeTab}: any) => {
     emailValidityCheck: [
       {
         isValid: (value) => {
-          return validateEmail(value);
+          return true
         },
         invalidityMessage: "Это должен быть email",
       },
@@ -57,15 +57,17 @@ const SingUp = ({changeTab}: any) => {
       };
       try {
         let response = await fetchWrapper("/register", "POST", data);
+        console.log(response, 'response');
+        
 
-        if (response.status === 200) {
+        if (response.statusCode === 200) {
           changeTab("signin");
           validForm.resetAllValidation();
           resetFormValue();
 
           Notification('Вы успешно зарегестрировались')
         }
-        if(response.status === 422){
+        if(response.statusCode === 422){
            response.error &&
              Notification(response.error.message || response.error.errmsg);
         }

@@ -6,6 +6,8 @@ const bcrypt = require("bcrypt")
 const { check, validationResult } = require("express-validator");
 require("dotenv").config();
 
+const Auth = require("./models/Auth")
+const { handleError, ErrorHandler } = require("./utils/ErrorHandler")
 
 mongoose.connect(
   `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@ds351807.mlab.com:51807/english-cards`,
@@ -16,44 +18,44 @@ var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => console.log("connected"));
 
-const Auth = require("./models/Auth")
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.post(
   "/register",
-  [
-    check("email").isEmail(),
-    check("password")
-      .isLength({ min: 7 })
-      .withMessage("Минимальная длина пароля 6 символов"),
-  ],
-  (req, res) => {
+  // [
+  //   check("email").isEmail(),
+  //   check("password")
+  //     .isLength({ min: 7 })
+  //     .withMessage("Минимальная длина пароля 6 символов"),
+  // ],
+  async (req, res, next) => {
     console.log(req.body, "body");
 
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
-    }
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //   return res.status(422).json({ errors: errors.array() });
+    // }
 
-    const request = new Auth(req.body);
-    request
-      .save()
-      .then((result) => {
-        console.log(result, "result");
+    
+    try {
+      const user = new Auth(req.body);
+      const userDb = await user.save()
+      console.log(userDb, "userDb");
+      if(userDb){
         res.status(200).json({
-          status: 200,
+          status: "OK",
+          statusCode: 200,
           message: "Вы успешно зарегестрированы",
         });
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(422).json({
-          status: 422,
-          error: err,
-        });
-      });
+      }
+
+    } catch (err) {
+      console.log(err);
+      next(new ErrorHandler(422, err))
+    }
   }
 );
 
@@ -63,28 +65,26 @@ app.post("/login", async (req, res) => {
   const user = await Auth.findOne({ email: req.body.email })
 
   if (!user) {
-      res.status(422).json({
-        status: 422,
-        error: "Email не найден",
-      });
-    }
+    throw new ErrorHandler(422, "Email не найден")
+  }
 
   const isValidPassword = await bcrypt.compare(req.body.password, user.password);
   if (!isValidPassword) {
-    res.status(422).json({
-      status: 422,
-      error: "Пароль указан неверно",
-    });
+    throw new ErrorHandler(422, "Пароль указан неверно")
   }
   
   res.status(200).json({
-    status: 200,
+    status: "OK",
+    statusCode: 200,
     user: {
       email: user.email
     }
   });
-  
-  
 });
+
+app.use((err, req, res, next) => {
+  console.log(err, 'err');
+  handleError(err, res)
+})
 
 app.listen(port, () => console.log(`Start:${port}`));

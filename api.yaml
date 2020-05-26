@@ -327,6 +327,14 @@ components:
     SuccessMessage:
       type: object
       properties:
+        status:
+          type: string
+          description: Текстовое сообщение статуса
+          example: OK
+        statusCode:
+          type: integer
+          description: Числовое обозночение статуса
+          example: 200
         message:
           type: string
           description: Сообщение об успешном действии
@@ -334,7 +342,15 @@ components:
     ErrorMessage:
       type: object
       properties:
+        status:
+          type: string
+          description: Текстовое сообщение статуса
+          example: OK
+        statusCode:
+          type: integer
+          description: Числовое обозночение статуса
+          example: 200
         message:
           type: string
           description: Сообщение об ошибке
-          example: Ошибка вводе пароля
+          example: Пароль не подходит
