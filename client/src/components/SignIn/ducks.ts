@@ -1,48 +1,50 @@
 import { createSlice, createAction, createSelector } from '@reduxjs/toolkit'
 import { all, put, call, takeEvery } from 'redux-saga/effects'
 
-import { fetchWrapper } from '../../utils'
+import { fetchWrapper, Notification } from '../../utils'
 import history from '../../utils/browserHistory'
 
 const prefix = 'singIn'
 
 //REDUCER
-const singIn = createSlice({
+const signIn = createSlice({
 	name: prefix,
-	initialState: [],
+	initialState: {},
 	reducers: {
-		setProfile: (state, action) => {
-			//   state.push(...action.payload);
-		},
+		setProfile: (state, action) => action.payload
 	},
 })
 
-// export const sortedCurrencyTableData = createSelector(
-//   [(state) => state.currencyTable],
-//   (currencyTable) => R.sort(diff, currencyTable)
-// );
-
-const { actions, reducer } = singIn
+const { actions, reducer } = signIn
 
 const { setProfile } = actions
-export const singInReducer = reducer
+export const userReducer = reducer
 
 export const updateSingInAction = createAction<object>(
 	`${prefix}/UPDATE_SING_IN_ACTION`
 )
 
+//SELECTOR
+export const userSelector = createSelector(
+	[(state: any) => state.userReducer],
+	(state) => state
+);
+
 //SAGA
 function* updateSingInSaga(action: any) {
-	const data = action.payload
+	try {
+		const data = action.payload
 
-	let response = yield call(fetchWrapper, "/login", "POST", data);
-	console.log(response, 'r')
+		let { statusCode, user: userData } = yield call(fetchWrapper, "/login", "POST", data);
 
-	// if (response) {
-	// 	history.push('/dashboard')
-	// }
-
-	//   yield put(updateCurrencyFavorite(action.payload));
+		if (statusCode === 200) {
+			history.push('/dashboard')
+			yield call(Notification, 'Рады видеть вас!')
+			yield put(setProfile({user: userData}));
+		}
+	} catch (error) {
+		yield call(Notification, 'Извините, что-то пошло не так:(')
+	}
 }
 
 export function* watchSingIn() {

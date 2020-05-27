@@ -3,10 +3,11 @@ const app = express();
 const port = 8080;
 var mongoose = require("mongoose");
 const bcrypt = require("bcrypt")
-const { check, validationResult } = require("express-validator");
+//Валидация пока для примера
+// const { check, validationResult } = require("express-validator");
 require("dotenv").config();
 
-const Auth = require("./models/Auth")
+const User = require("./models/User")
 const { handleError, ErrorHandler } = require("./utils/ErrorHandler")
 
 mongoose.connect(
@@ -25,23 +26,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.post(
   "/register",
-  // [
-  //   check("email").isEmail(),
-  //   check("password")
-  //     .isLength({ min: 7 })
-  //     .withMessage("Минимальная длина пароля 6 символов"),
-  // ],
   async (req, res, next) => {
     console.log(req.body, "body");
-
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //   return res.status(422).json({ errors: errors.array() });
-    // }
-
-    
     try {
-      const user = new Auth(req.body);
+      const user = new User(req.body);
       const userDb = await user.save()
       console.log(userDb, "userDb");
       if(userDb){
@@ -61,25 +49,30 @@ app.post(
 
 app.post("/login", async (req, res) => {
   console.log(req.body);
-  
-  const user = await Auth.findOne({ email: req.body.email })
+  try {
+    const user = await User.findOne({ email: req.body.email })
 
-  if (!user) {
-    throw new ErrorHandler(422, "Email не найден")
-  }
-
-  const isValidPassword = await bcrypt.compare(req.body.password, user.password);
-  if (!isValidPassword) {
-    throw new ErrorHandler(422, "Пароль указан неверно")
-  }
-  
-  res.status(200).json({
-    status: "OK",
-    statusCode: 200,
-    user: {
-      email: user.email
+    if (!user) {
+      throw new ErrorHandler(422, "Email не найден")
     }
-  });
+
+    const isValidPassword = await bcrypt.compare(req.body.password, user.password);
+    if (!isValidPassword) {
+      throw new ErrorHandler(422, "Пароль указан неверно")
+    }
+
+    res.status(200).json({
+      status: "OK",
+      statusCode: 200,
+      user: {
+        email: user.email
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    next(new ErrorHandler(422, err))
+  }
+  
 });
 
 app.use((err, req, res, next) => {

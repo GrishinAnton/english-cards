@@ -3,7 +3,7 @@ import { Form, Button } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { updateSingInAction } from './ducks'
 
-import { fetchWrapper, CheckValidity, validateEmail } from "../../utils";
+import { CheckValidity, validateEmail } from "../../utils";
 import { ValidatySchemaGroup } from "../../types/types";
 
 const SingIn = () => {

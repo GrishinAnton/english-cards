@@ -14,7 +14,7 @@ const SingUp = ({changeTab}: any) => {
     emailValidityCheck: [
       {
         isValid: (value) => {
-          return true
+          return validateEmail(value)
         },
         invalidityMessage: "Это должен быть email",
       },
