@@ -35,12 +35,13 @@ function* updateSingInSaga(action: any) {
 	try {
 		const data = action.payload
 
-		let { statusCode, user: userData } = yield call(fetchWrapper, "/login", "POST", data);
+		let { statusCode, token } = yield call(fetchWrapper, "/login", "POST", data);
 
-		if (statusCode === 200) {
+		if (statusCode === 200 && token) {
 			history.push('/dashboard')
-			yield call(Notification, 'Рады видеть вас!')
-			yield put(setProfile({user: userData}));
+			// yield call(Notification, 'Рады видеть вас!')
+			// yield put(setProfile({user: userData}));
+			localStorage.setItem('token', token)
 		}
 	} catch (error) {
 		yield call(Notification, 'Извините, что-то пошло не так:(')

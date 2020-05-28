@@ -1,13 +1,21 @@
 import React, {useState, useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
-import { userSelector} from '../SignIn/ducks'
+import { Button } from 'react-bootstrap'
+ 
+import { fetchWrapper } from '../../utils/fetch'
  
 const Dashboard = () => {
 	const dispatch = useDispatch()
-	const user = useSelector(userSelector)
+
+	const handler = async () => {
+		console.log('here');
+		
+		const tt = await fetchWrapper('/profile', 'POST', {})
+		console.log(tt);
+		
+	}
 	
-	return <div>{`Hello ${user.email}`}</div>
+	return <div><Button onClick={handler}>Click</Button></div>
 }
 
 export default Dashboard
