@@ -7,6 +7,7 @@ export const fetchWrapper = async (
 		method: method,
 		headers: {
 			'Content-Type': 'application/json',
+			'Authorization': `${localStorage.getItem('token')}`
 		},
 		body: JSON.stringify(data),
 	})
