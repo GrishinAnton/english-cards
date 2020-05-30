@@ -7,41 +7,41 @@ import { ValidatySchemaGroup } from '../../types/types'
 const SingUp = ({changeTab}: any) => {
 	const [email, setEmail] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
-  const [passwordDouble, setPasswordDouble] = useState<string>("");  
+  const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");  
   const [buttonLoading, setButtonLoading] = useState<boolean>(false)
 
   const validitySchema: ValidatySchemaGroup = {
     emailValidityCheck: [
       {
         isValid: (value) => {
-          return validateEmail(value)
+          return validateEmail(value);
         },
-        invalidityMessage: 'Это должен быть email'
-      }
+        invalidityMessage: "Это должен быть email",
+      },
     ],
     passwordValidityCheck: [
       {
         isValid: (value) => {
-          return value.length >= 6
+          return value.length >= 6;
         },
-        invalidityMessage: 'Пароль должен быть не менее 6 символов'
-      }
+        invalidityMessage: "Пароль должен быть не менее 6 символов",
+      },
     ],
-    passwordDoubleValidityCheck: [
+    passwordConfirmationValidityCheck: [
       {
         isValid: (value) => {
-          return value.length >= 6
+          return value.length >= 6;
         },
-        invalidityMessage: 'Пароль должен быть не менее 6 символов'
+        invalidityMessage: "Пароль должен быть не менее 6 символов",
       },
       {
         isValid: (value, preValue) => {
-          return value === preValue
+          return value === preValue;
         },
-        invalidityMessage: 'Пароли должны совпадать'
-      }
-    ]
-  }
+        invalidityMessage: "Пароли должны совпадать",
+      },
+    ],
+  };
 
 	const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -57,7 +57,7 @@ const SingUp = ({changeTab}: any) => {
       };
       try {
         let response = await fetchWrapper("/register", "POST", data);
-        
+
         if (response.status === 200) {
           changeTab("signin");
           validForm.resetAllValidation();
@@ -66,7 +66,8 @@ const SingUp = ({changeTab}: any) => {
           Notification('Вы успешно зарегестрировались')
         }
         if(response.status === 422){
-           response.error && Notification(response.error.message);
+           response.error &&
+             Notification(response.error.message || response.error.errmsg);
         }
       } catch (error) {
         console.log(error);
@@ -79,7 +80,7 @@ const SingUp = ({changeTab}: any) => {
   const resetFormValue = () => {
     setEmail('')
     setPassword('')
-    setPasswordDouble('')
+    setPasswordConfirmation("");
   }
 
 	return (
@@ -104,17 +105,17 @@ const SingUp = ({changeTab}: any) => {
             value={password}
             placeholder="Пароль"
             data-validity="passwordValidityCheck"
-            data-bind="passwordDoubleValidityCheck"
+            data-bind="passwordConfirmationValidityCheck"
           />
         </Form.Group>
         <Form.Group>
           <Form.Label>Подтвердите пароль:</Form.Label>
           <Form.Control
-            onChange={(e) => setPasswordDouble(e.target.value)}
+            onChange={(e) => setPasswordConfirmation(e.target.value)}
             type="password"
-            value={passwordDouble}
+            value={passwordConfirmation}
             placeholder="Повторите пароль"
-            data-validity="passwordDoubleValidityCheck"
+            data-validity="passwordConfirmationValidityCheck"
           />
         </Form.Group>
         <Button variant="primary" type="submit" disabled={buttonLoading}>
