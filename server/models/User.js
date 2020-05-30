@@ -1,32 +1,6 @@
 const mongoose = require("mongoose");
 
-const SingInSchema = new.mongoose.Schema({
-  email: {
-    type: String,
-    trim: true,
-    required: true,
-  },
-  password: {
-    type: String,
-    trim: true,
-    required: true,
-  },
-});
-
-const SingUpSchema = new.mongoose.Schema({
-  email: {
-    type: String,
-    trim: true,
-    required: true,
-  },
-  password: {
-    type: String,
-    trim: true,
-    required: true,
-  },
-});
-
-const ProfileSchema = new.mongoose.Schema({
+const UserSchema = new.mongoose.Schema({
   name: {
     type: String,
   },
@@ -46,6 +20,4 @@ const ProfileSchema = new.mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("SingIn", SingInSchema);
-module.exports = mongoose.model("SingUp", SingUpSchema);
-module.exports = mongoose.model("ProfileSchema", ProfileSchema);
+module.exports = mongoose.model("User", UserSchema);
