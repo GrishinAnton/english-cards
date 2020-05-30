@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
-import { Row, Col, Tabs, Tab, Container, Toast } from "react-bootstrap";
+import { Row, Col, Tabs, Tab, Container } from "react-bootstrap";
 
 import SignIn from '../SignIn'
 import SingUp from '../SingUp'
 
 const Login = () => {
 	const [tabs, setTabs] = useState<string>('signin')
-	const [show, setShow] = useState<boolean>(true)
 
 	const changeTabs= (tab:string) => {
 		setTabs(tab)
@@ -29,19 +28,12 @@ const Login = () => {
               <Tab eventKey="singup" title="Зарегестрироваться">
                 <SingUp
                   changeTab={changeTabs}
-                  toast={() => setShow(true)}
                 ></SingUp>
               </Tab>
             </Tabs>
           </Col>
         </Row>
       </Container>
-      <Toast className="toast" onClose={() => setShow(false)} show={show} delay={3000} autohide>
-        <Toast.Header>
-          <strong className="mr-auto">Вы успешно зарегестрировались</strong>
-        </Toast.Header>
-        <Toast.Body>Теперь вы можете залогиниться</Toast.Body>
-      </Toast>
     </>
   );
 }
