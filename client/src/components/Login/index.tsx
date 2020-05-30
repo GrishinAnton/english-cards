@@ -8,9 +8,10 @@ const Login = () => {
 	const [tabs, setTabs] = useState<string>('signin')
 
 	return (
-		<Container>
-			<Row>
-				<Col md={4}>
+		<Container className="login-form login-form__container">
+			<Row className="justify-content-md-center">
+				<h1>Welcome to English-Card</h1>
+				<Col md={4} className="login-form__block">
 					<Tabs
 						id="controlled-tab-example"
 						activeKey={tabs}
