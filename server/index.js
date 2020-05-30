@@ -12,7 +12,7 @@ const { handleError, ErrorHandler } = require("./utils/ErrorHandler")
 const { createToken, verifyToken } = require("./utils/Token")
 
 mongoose.connect(
-  `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@ds351807.mlab.com:51807/english-cards`,
+  process.env.MONGO_URL,
   { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
