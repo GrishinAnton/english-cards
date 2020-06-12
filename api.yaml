@@ -243,7 +243,14 @@ components:
           example: test@test.ru
         sex:
           type: string
+          enum: [male, female]
           example: male
+        city:
+          type: string
+          example: Moscow
+        bithday:
+          type: string
+          example: "10.10.2000"
     Card:
       type: object
       properties:

@@ -74,7 +74,7 @@ app.post("/login", async (req, res) => {
   
 });
 
-app.post(
+app.get(
   "/profile",
   async (req, res, next) => {
     console.log(req.body);
@@ -95,7 +95,13 @@ app.post(
           status: "OK",
           statusCode: 200,
           user: {
-            email: user.email
+            name: user.name,
+            surname: user.surname,
+            sex: user.sex,
+            city: user.city,
+            email: user.email,
+            avatar: user.avatar,
+            bithday: user.bithday
           }
         });
       } else {

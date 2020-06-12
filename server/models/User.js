@@ -6,9 +6,11 @@ const SALT_WORK_FACTOR = 8;
 const UserSchema = new Schema({
   name: {
     type: String,
+    trim: true,
   },
   surname: {
     type: String,
+    trim: true,
   },
   email: {
     type: String,
@@ -28,10 +30,23 @@ const UserSchema = new Schema({
   },
   sex: {
     type: String,
+    enum: ['male', 'female'],
   },
   avatar: {
     type: String,
   },
+  city: {
+    type: String,
+    trim: true
+  },
+  bithday: {
+    type: String
+  }
+});
+
+UserSchema.pre("save", function (next) {
+  this.avatar = `https://www.pngitem.com/pimgs/m/22-223968_default-profile-picture-circle-hd-png-download.png`;
+  next();
 });
 
 UserSchema.pre("save", function (next) {
