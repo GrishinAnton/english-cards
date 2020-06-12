@@ -3,6 +3,8 @@ const Schema = mongoose.Schema;
 const bcrypt = require("bcrypt")
 const SALT_WORK_FACTOR = 8;
 
+const enumSex = ['male', 'female']
+
 const UserSchema = new Schema({
   name: {
     type: String,
@@ -30,7 +32,13 @@ const UserSchema = new Schema({
   },
   sex: {
     type: String,
-    enum: ['male', 'female'],
+    enum: enumSex,
+    validate: {
+      validator: function (arg) {
+        return enumSex.includes(arg)
+      },
+      message:'Пол, указан неверно'
+    }
   },
   avatar: {
     type: String,
@@ -45,7 +53,7 @@ const UserSchema = new Schema({
 });
 
 UserSchema.pre("save", function (next) {
-  this.avatar = `https://www.pngitem.com/pimgs/m/22-223968_default-profile-picture-circle-hd-png-download.png`;
+  this.avatar = `assets/default-profile-picture.png`;
   next();
 });
 
