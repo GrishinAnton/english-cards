@@ -3,12 +3,16 @@ const Schema = mongoose.Schema;
 const bcrypt = require("bcrypt")
 const SALT_WORK_FACTOR = 8;
 
+const enumSex = ['male', 'female']
+
 const UserSchema = new Schema({
   name: {
     type: String,
+    trim: true,
   },
   surname: {
     type: String,
+    trim: true,
   },
   email: {
     type: String,
@@ -28,10 +32,29 @@ const UserSchema = new Schema({
   },
   sex: {
     type: String,
+    enum: enumSex,
+    validate: {
+      validator: function (arg) {
+        return enumSex.includes(arg)
+      },
+      message:'Пол, указан неверно'
+    }
   },
   avatar: {
     type: String,
   },
+  city: {
+    type: String,
+    trim: true
+  },
+  bithday: {
+    type: String
+  }
+});
+
+UserSchema.pre("save", function (next) {
+  this.avatar = `assets/default-profile-picture.png`;
+  next();
 });
 
 UserSchema.pre("save", function (next) {
