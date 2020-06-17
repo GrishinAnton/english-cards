@@ -1,16 +1,17 @@
 import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { createEpicMiddleware } from 'redux-observable';
-import { ActionType } from 'typesafe-actions';
+import { RootAction, RootState, Services } from 'typesafe-actions';
 
-import actions from './rootAction';
 import epics from './rootEpic';
-import reducers, { RootState } from './rootReducer';
+import reducers from './rootReducer';
+import services from './rootService';
 
 export type RootStateType = RootState;
-export type RootAction = ActionType<typeof actions>;
 
-const epicMiddleware = createEpicMiddleware<RootAction, RootAction, RootState>();
+const epicMiddleware = createEpicMiddleware<RootAction, RootAction, RootState, Services>({
+  dependencies: services,
+});
 
 function configureStore(initialState?: RootStateType) {
   return createStore(

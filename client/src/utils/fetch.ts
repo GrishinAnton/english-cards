@@ -1,8 +1,8 @@
-export const fetchWrapper = async (
+export const fetchWrapper = async <T>(
 	url: string,
 	method: string,
 	data: object
-): Promise<any> => {
+): Promise<T> => {
 	const response = await fetch(url, {
 		method: method,
 		headers: {
