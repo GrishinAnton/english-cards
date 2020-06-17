@@ -1,8 +1,8 @@
-// import * as somethingServices from '../components/pages/Something/services';
+import * as signInServices from '../components/SignIn/services';
 
 const services = {
   api: {
-    // something: somethingServices,
+    signIn: signInServices,
   },
 };
 

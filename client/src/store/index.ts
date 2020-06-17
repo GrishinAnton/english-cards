@@ -23,4 +23,4 @@ function configureStore(initialState?: RootStateType) {
 
 export const store = configureStore();
 
-// epicMiddleware.run(epics);
+epicMiddleware.run(epics);

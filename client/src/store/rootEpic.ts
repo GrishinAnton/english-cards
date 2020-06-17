@@ -1,9 +1,9 @@
 import { combineEpics } from 'redux-observable';
 
-// import somethingEpic from '../components/pages/Something/epic';
+import signInEpics from '../components/SignIn/epics';
 
 const epics = combineEpics(
-  // ...somethingEpic,
+  ...signInEpics,
 );
 
 export default epics;
