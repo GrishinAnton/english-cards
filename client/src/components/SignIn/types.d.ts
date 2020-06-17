@@ -7,9 +7,6 @@ declare module 'SignInModel' {
   export type LoginResponse = {
     status: 'OK';
     statusCode: number;
-    message: string;
     token: string;
   };
-
-  export type Token = null | string;
 }
