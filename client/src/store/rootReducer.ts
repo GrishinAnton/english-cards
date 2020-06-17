@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-// import { somethingReducer, SomethingState } from '../components/pages/Something/reducer';
+import signInReducer from '../components/SignIn/reducers';
 
 const reducers = combineReducers({
-  // something: somethingReducer,
+  signIn: signInReducer,
 });
 
 export default reducers;

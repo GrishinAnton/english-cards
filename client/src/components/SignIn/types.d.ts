@@ -8,5 +8,8 @@ declare module 'SignInModel' {
     status: 'OK';
     statusCode: number;
     message: string;
+    token: string;
   };
+
+  export type Token = null | string;
 }
