@@ -1,7 +1,8 @@
+import { RootState } from 'typesafe-actions';
 import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
-import { useDispatch } from 'react-redux'
-import { updateSingInAction } from './ducks'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateSignInAsync } from './actions'
 
 import { CheckValidity, validateEmail } from "../../utils";
 import { ValidatySchemaGroup } from "../../types/types";
@@ -10,6 +11,7 @@ const SingIn = () => {
 	const [email, setEmail] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
 	const dispatch = useDispatch()
+	const isLoading = useSelector((state: RootState) => state.signIn.isLoading);
 
 	const validitySchema: ValidatySchemaGroup = {
 		emailValidityCheck: [
@@ -37,12 +39,10 @@ const SingIn = () => {
 		let validForm = new CheckValidity(form, validitySchema);
 
 		if (validForm.valid()) {
-		const data = {
-			email: email,
-			password: password,
-		};
-
-		dispatch(updateSingInAction(data));
+			dispatch(updateSignInAsync.request({
+				email: email,
+				password: password,
+			}));
 		}
 	};
 
@@ -55,7 +55,8 @@ const SingIn = () => {
             onChange={(e) => setEmail(e.target.value)}
             type="email"
             placeholder="Enter email"
-            data-validity="emailValidityCheck"
+						data-validity="emailValidityCheck"
+						disabled={isLoading}
           />
         </Form.Group>
 
@@ -65,7 +66,8 @@ const SingIn = () => {
             onChange={(e) => setPassword(e.target.value)}
             type="password"
             placeholder="Password"
-            data-validity="passwordValidityCheck"
+						data-validity="passwordValidityCheck"
+						disabled={isLoading}
           />
         </Form.Group>
         <Button variant="primary" type="submit">Войти</Button>

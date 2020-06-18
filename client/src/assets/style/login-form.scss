@@ -15,4 +15,8 @@
         flex-direction: column;
         align-items: center;
     }
+
+    input:disabled {
+        opacity: 0.2;
+    }
 }

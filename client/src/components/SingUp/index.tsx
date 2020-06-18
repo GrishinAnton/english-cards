@@ -56,7 +56,7 @@ const SingUp = ({changeTab}: any) => {
         password: password,
       };
       try {
-        let response = await fetchWrapper("/register", "POST", data);
+        let response = await fetchWrapper<any>("/register", "POST", data);
         console.log(response, 'response');
         
 
