@@ -1,7 +1,7 @@
 export const fetchWrapper = async <T>(
 	url: string,
 	method: string,
-	data: object
+	data?: object,
 ): Promise<T> => {
 	const response = await fetch(url, {
 		method: method,
@@ -9,8 +9,14 @@ export const fetchWrapper = async <T>(
 			'Content-Type': 'application/json',
 			'Authorization': `${localStorage.getItem('token')}`
 		},
-		body: JSON.stringify(data),
+		body: data ? JSON.stringify(data) : undefined,
 	})
+
+	// Выбрасывание ошибки в случаях неудачного запроса
+	if (response.ok === false) {
+		const { message } = await response.json();
+		throw new Error(message);
+	}
 
 	return response.json()
 }
